@@ -1,24 +1,27 @@
 require('dotenv').config();
 const puppeteer = require('puppeteer');
-const scraper = require('./libs/scraper.js')
+const scraper = require('./libs/scraper.js');
+const redis = require('redis');
+const redisClient = redis.createClient({
+  password: process.env.REDIS_PASS
+});
 const publications = [
   {id: 1, title: 'gleaner', url: 'http://jamaica-gleaner.com/latest'},
   {id: 2, title: 'observer', url: 'http://www.jamaicaobserver.com/latestnews/'}
 ];
 const cron = require('node-cron');
-const mongoose = require('mongoose');
 
-//mongoose.connect('mongodb://localhost:27017/frontpage', {useNewUrlParser: true, useUnifiedTopology: true});
+redisClient.on('connect', () => {
+  console.log('Connected to redis server');
+});
 
-// const Article = mongoose.model('Article', {
-//   title: String,
-//   link: String,
-//   source: String
-// });
+redisClient.on('error', (err) => {
+  console.log('Error while connecting to redis server', err);
+});
 
 let count = 0;
 console.log('Script started');
-cron.schedule("* * * * *", function() {
+cron.schedule("*/2 * * * *", function() {
   console.log(`Starting scrape job for ${publications[count].title}`);
     //should cron job run?
     if(process.env.RUN === 'true'){
@@ -36,6 +39,23 @@ const start = async (publication) => {
     let html;
     await page.goto(publication.url, {waitUntil: 'networkidle0'})
     html = await page.content()
-    console.log(scraper.init(html, publication.id));    
+    const articles = scraper.init(html, publication.id);   
     await browser.close();
+    insert(articles, publication.title);
 }
+
+const insert = (articles, publication) =>{
+  articles.forEach((article) => {
+    const articleToString = JSON.stringify(article)
+    redisClient.sadd(publication, articleToString, (err, res) => {
+      if(err){
+        console.log(err)
+        throw err
+      }
+      console.log(res)
+    });
+  });
+}
+
+
+
