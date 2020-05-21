@@ -2,6 +2,7 @@ require('dotenv').config();
 const puppeteer = require('puppeteer');
 const scraper = require('./libs/scraper.js');
 const redis = require('redis');
+const ping = require('./libs/utils/ping');
 const redisClient = redis.createClient({
   password: process.env.REDIS_PASS
 });
@@ -23,14 +24,16 @@ let count = 0;
 console.log('Script started');
 cron.schedule("*/2 * * * *", function() {
   console.log(`Starting scrape job for ${publications[count].title}`);
-    //should cron job run?
-    if(process.env.RUN === 'true'){
-      start(publications[count]);
-      if(count === (publications.length-1)) count = 0;
-      else count++      
-    }else{
-      console.log('Cron service stopped');
-    }    
+    ping(publications[count].url, (code) => {
+      if(process.env.RUN === 'true' && code === 200){
+        console.log(`${publications[count].url} was successfully pinged.`);
+        start(publications[count]);
+        if(count === (publications.length-1)) count = 0;
+        else count++      
+      }else{
+        console.log(`${code} received for ${publications[count]}`);
+      } 
+    });      
 });
 
 const start = async (publication) => {

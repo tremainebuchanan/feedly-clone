@@ -1,5 +1,5 @@
-const gleaner = require('../libs/apis/gleaner.js');
-const observer = require('../libs/apis/observer');
+const gleaner = require('./scrapers/gleaner.js');
+const observer = require('./scrapers/observer');
 module.exports = {
     
     init: function(html, publicationId){
