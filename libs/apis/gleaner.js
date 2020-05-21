@@ -21,12 +21,13 @@ module.exports = {
  
     retrieveArticleFromDiv: function (divPosition){
         const data = this.$(this.targets[0]).children()[1].children[divPosition];
-        return {
-            title: data.children[3].children[1].children[0].children[0].data.trim(),
-            link : data.children[3].children[1].children[0].attribs.href,
-            blurb: data.children[5].children[1].children[0].data.trim(),
-            source: this.source,
-        }
+        return this.extractArticleFromDiv(data);
+        // return {
+        //     title: data.children[3].children[1].children[0].children[0].data.trim(),
+        //     link : data.children[3].children[1].children[0].attribs.href,
+        //     blurb: data.children[5].children[1].children[0].data.trim(),
+        //     source: this.source,
+        // }
     },
 
     getViewHeader: function(){
@@ -45,13 +46,23 @@ module.exports = {
         const viewContentChildren = targetDiv.children()[0].children;
         const divs = viewContentChildren.filter(child => child.name === 'div');
         divs.forEach(div => {
-            this.articles.push({
-                title: div.children[3].children[1].children[0].children[0].data.trim(),
-                link: div.children[3].children[1].children[0].attribs.href,
-                blurb: div.children[5].children[1].children[0].data.trim(),
-                source: this.source
-            });
+            this.articles.push(this.extractArticleFromDiv(div));
+            // this.articles.push({
+            //     title: div.children[3].children[1].children[0].children[0].data.trim(),
+            //     link: div.children[3].children[1].children[0].attribs.href,
+            //     blurb: div.children[5].children[1].children[0].data.trim(),
+            //     source: this.source
+            // });
         });
     },
+
+    extractArticleFromDiv: function (data){
+        return {
+            title: data.children[3].children[1].children[0].children[0].data.trim(),
+            link : data.children[3].children[1].children[0].attribs.href,
+            blurb: data.children[5].children[1].children[0].data.trim(),
+            source: this.source,
+        }
+    }
 
 }
