@@ -3,4 +3,3 @@ before_install:
   - nvm install 0.14
 node_js:
 - stable
-- "0.14"
