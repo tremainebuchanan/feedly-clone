@@ -24,14 +24,14 @@ let count = 0;
 console.log('Script started');
 cron.schedule("*/2 * * * *", function() {
   console.log(`Starting scrape job for ${publications[count].title}`);
-    ping(publications[count].url, (code) => {
+    ping(publications[count].url, (error, code) => {
       if(process.env.RUN === 'true' && code === 200){
         console.log(`${publications[count].url} was successfully pinged.`);
         start(publications[count]);
         if(count === (publications.length-1)) count = 0;
         else count++      
       }else{
-        console.log(`${code} received for ${publications[count]}`);
+        console.log(`${error} received for ${publications[count].url}`);
       } 
     });      
 });

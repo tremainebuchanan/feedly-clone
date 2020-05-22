@@ -12,8 +12,8 @@
         <h1>Latest News</h1>
       </div>
       <div  style="margin-bottom: 24px;">
-        <a href style="color:#f40552;font-weight:bold;margin-right: 12px;">My List (<%= articles.length %>)</a>
-        <a href style="color:#f40552;font-weight:bold">Explore</a>
+        <a href="/jamaica-gleaner" style="color:#f40552;font-weight:bold;margin-right: 12px;">Jamaica Gleaner</a>
+        <a href="/jamaica-observer" style="color:#f40552;font-weight:bold">Jamaica Observer</a>
       </div>
      
       <section class="articles">
@@ -25,7 +25,7 @@
               </div>
               <div class="article-text">
                 <h2><%= article.title%></h2>
-              <p><span class="muted-text"><%= article.source %> - Published 2 mins ago</span></p>
+              <p><span class="muted-text"><%= article.source %></span></p>
               <p><%= article.blurb%> </p>
               </div>            
           </a>

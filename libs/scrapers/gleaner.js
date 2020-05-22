@@ -28,9 +28,10 @@ module.exports = {
         const targetDiv = this.$(this.targets[0]);
         const data = this.$(targetDiv).children().children()[0].children[1].children[1];
         return {
-            title: data.children[3].children[1].children[0].children[0].data.children,
+            title: data.children[3].children[1].children[0].children[0].data.children || 'Article Title Missing',
             link : data.children[3].children[1].children[0].attribs.href,
             blurb: data.children[5].children[1].children[0].data.trim(),
+            //retrievedOn: Date.now(),
             source: this.source
         }  
     },
@@ -49,6 +50,7 @@ module.exports = {
             title: data.children[3].children[1].children[0].children[0].data.trim(),
             link : data.children[3].children[1].children[0].attribs.href,
             blurb: data.children[5].children[1].children[0].data.trim(),
+            //retrievedOn: Date.now(),
             source: this.source,
         }
     }

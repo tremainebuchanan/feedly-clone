@@ -92,6 +92,7 @@ module.exports = {
                 title: details.titles[i],
                 blurb: details.blurbs[i],
                 link: details.links[i],
+                //retrievedOn: Date.now(),
                 source: 'Jamaica Observer'
             }
             articles.push(article);

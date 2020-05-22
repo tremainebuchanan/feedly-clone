@@ -1,4 +1,4 @@
-const ping = require('../libs/utils/ping');
+const ping = require('../../libs/utils/ping');
 
 describe('Ping Utility Test', () => {
     test('Should ping valid URL', () => {

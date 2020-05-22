@@ -1,16 +1,16 @@
 const timeout = 5000;
-const gleaner = require('../libs/scrapers/gleaner');
+const observer = require('../../libs/scrapers/observer');
 
-describe('Gleaner Scraper', () => {
+describe('Observer Scraper', () => {
     let page;
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage();
-      await page.goto('http://jamaica-gleaner.com/latest');
+      await page.goto('http://www.jamaicaobserver.com/latestnews/');
     }, timeout);
 
     it('should get articles', async () => {
       const html = await page.content();
-      const articles = gleaner.getArticles(html);
+      const articles = observer.getArticles(html);
       expect(articles.length).toBeGreaterThan(0);
     });
   },
