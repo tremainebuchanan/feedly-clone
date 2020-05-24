@@ -3,10 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/frontpage', { useNewUrlParser: true, useUnifiedTopology: true});
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
+
+var db = mongoose.connection;
+
+// Added check for DB connection
+
+if(!db)
+    console.log("Error connecting db")
+else
+    console.log("Db connected successfully")
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+const routes = require('./routes');
 var app = express();
 
 // view engine setup
@@ -19,8 +31,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', routes);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
