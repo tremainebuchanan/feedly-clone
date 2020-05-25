@@ -1,7 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Bree+Serif|Merriweather:300&display=swap');
+
+*{
+  box-sizing: border-box;
+}
+
+.headline {
+  border: 4px solid #f40552;
+  margin-top: 12px;
+}
+
 body {
-  font-size: 14px;
+  font-size: 15px;
   font-family: 'Merriweather', serif;
+  line-height: 1.5em;
 }
 
 h1,h2,h3,h4,h5,h6{
@@ -13,10 +24,16 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .container{
-  width: 700px;
+  width: 720px;
   height: auto;
   margin: auto;
   margin-bottom: 36px;
+}
+
+.page-heading{
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .article{
@@ -28,7 +45,7 @@ h1,h2,h3,h4,h5,h6{
   width: 100%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
   padding-right: 12px;
 }
 
@@ -42,11 +59,12 @@ h1,h2,h3,h4,h5,h6{
 
 .article-text > p{
   margin-top: 4px;
+  margin-bottom: 0;
 }
 
-.article:hover{
-  border-right: 4px solid #f40552;
-}
+/* .article:hover{
+  border-right: 2px solid #f40552;
+} */
 
 .article-content-image{
   flex: initial;
@@ -65,4 +83,73 @@ h1,h2,h3,h4,h5,h6{
 .muted-text{
   font-size: 13px;
   color:#9e9e9e;
+}
+
+.article-story{
+  margin-bottom: 24px;
+  display: none;
+  /* width: 77%; */
+  float:right;
+  line-height: 2em;
+}
+
+.show{
+  display: block;
+}
+
+.link-text{
+  color: #035aa6;
+}
+
+@media screen and (max-width: 800px){
+
+  .container{
+    width: 100%;
+    height: auto;
+  }
+
+ .article{
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    display: block;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 24px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .article-content-image{
+    display: none;
+    /* flex: initial;
+    width: 150px;
+    height: 120px;
+    margin-right:12px;
+    margin-top: 12px;
+    flex-shrink: 0; */
+  }
+  
+  .article-content-image > img{
+    width: 100%;
+    height: 100%;
+  }
+
+  /* .article-blurb{
+    display: none;
+  } */
+
+  .article-text > h2{
+    font-size: 1.3em;
+  }
+
+  .page-heading{
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 }

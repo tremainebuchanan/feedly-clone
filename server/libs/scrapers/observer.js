@@ -9,6 +9,30 @@ module.exports = {
         return this.buildArticles(details);
     },
 
+    getArticle: function (html){
+        this.$ = cheerio.load(html);
+        let storyChildren;
+        let article = "";
+        const news = this.$('#news_articles_section').children();
+        this.$(news).each((i, ele) => {
+            if(this.$(ele)[0].attribs.id === 'story'){
+                this.$(ele).children().each((i, e) => {
+                    if(this.$(e)[0].attribs.id === 'story'){
+                        storyChildren = this.$(e)[0]
+                    }
+                })
+            }
+        })
+        this.$(storyChildren).children().each((i, element) => {
+            if(this.$(element)[0].name === 'p'){
+                if(this.$(element)[0].children.length  > 0 && this.$(element)[0].children[0].data && this.$(element)[0].children[0].data.indexOf(' ') >= 0 ){
+                    article += this.$(element)[0].children[0].data.trim()                
+                }
+            }
+        })
+        return article;
+    },
+
     getColumnOneArticles: function (){
         let links = [];         
         let titles = [];
@@ -99,6 +123,5 @@ module.exports = {
         }
         return articles;
        
-    }
-    
+    },
 }
